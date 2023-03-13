@@ -32,18 +32,18 @@ const BlogPostPage : React.FC<IPost> = ({title, description}) => {
     return <BlogPost isLoading={isLoading} title={title} description={description}/>
 }
 
-export async function getStaticPaths(){
-    const client = await MongoClient.connect('mongodb+srv://proftoby97:kpmDnA3Idt99zbRG@eyeserver.tn3mtek.mongodb.net/?retryWrites=true&w=majority');
-    const db : Db = client.db();
-    const blog : Collection<CreatePostDefaultValue> = db.collection('blogs');
-    const posts = await blog.find({}, { projection:  {_id: 1}}).toArray();
-    await client.close()
-    return {
-        fallback: true,
-        paths :  posts.map((post : any)   =>({params: {post: post._id.toString()},}))
-    }
-}
-export const getStaticProps: GetStaticProps = async (context : GetStaticPropsContext<ParsedUrlQuery, PreviewData>) => {
+// export async function getStaticPaths(){
+//     const client = await MongoClient.connect('mongodb+srv://proftoby97:kpmDnA3Idt99zbRG@eyeserver.tn3mtek.mongodb.net/?retryWrites=true&w=majority');
+//     const db : Db = client.db();
+//     const blog : Collection<CreatePostDefaultValue> = db.collection('blogs');
+//     const posts = await blog.find({}, { projection:  {_id: 1}}).toArray();
+//     await client.close()
+//     return {
+//         fallback: true,
+//         paths :  posts.map((post : any)   =>({params: {post: post._id.toString()},}))
+//     }
+// }
+export const getServerSideProps: GetServerSideProps = async (context ) => {
     const slug : string   | undefined | any = context.params?.post
     const postId = slug?.split('-').shift();
     //perform some async function to fetch data from post
