@@ -29,7 +29,9 @@ export default function Main(props: MainProps) {
         {title}
       </Typography>
       <Divider />
-        <ReactMarkdown linkTarget="_blank"  children={posts} className="markdown" key={''} remarkPlugins={[remarkGfm]}/>
+        <ReactMarkdown linkTarget="_blank"  className="markdown" key={''} remarkPlugins={[remarkGfm]}>
+            {posts}
+        </ReactMarkdown>
     </Grid>
   );
 }
