@@ -1,9 +1,9 @@
-import { Container } from "@mui/system";
+import {Box, Container} from "@mui/system";
 import Header from "./Header";
 import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import { Grid } from "@mui/material";
+import {CircularProgress, Grid, Typography} from "@mui/material";
 import Sidebar from "./Sidebar";
 import Main from "./Main";
 import React, {useContext} from "react";
@@ -15,7 +15,8 @@ import Head from "next/head";
 import Paper from "@mui/material/Paper";
 interface IPost {
     title: string,
-    description: string
+    description: string,
+    isLoading: boolean
 }
 const sidebar = {
     title: 'About',
@@ -40,7 +41,7 @@ const sidebar = {
       { name: 'Facebook', icon: FacebookIcon },
     ],
   };
-const BlogPost : React.FC<IPost> = ({title, description}) => {
+const BlogPost : React.FC<IPost> = ({title, description, isLoading}) => {
     const changeFont: boolean = useContext(ContextApi).changeFont;
     const darkMode: boolean = useContext(ContextApi).darkMode;
 
@@ -70,7 +71,7 @@ const BlogPost : React.FC<IPost> = ({title, description}) => {
                 <Container maxWidth={'lg'}>
                     <Header/>
                     <Grid container spacing={5} sx={{mt: 3}}>
-                        <Main title={title} posts={description}/>
+                            <Main isLoading={isLoading} title={title} posts={description}/>
                         <Sidebar
                             title={sidebar.title}
                             description={sidebar.description}

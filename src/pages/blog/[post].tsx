@@ -1,24 +1,49 @@
 import BlogPost from "@/Components/Blog/BlogPost";
-import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
-import React from "react";
+import {
+    GetServerSideProps,
+    GetServerSidePropsContext,
+    GetStaticProps,
+    GetStaticPropsContext,
+    NextPage,
+    PreviewData
+} from "next";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import baseUrl from "@/Helpers/BaseUrl";
-interface IData {
-    title : string,
-    description: string,
+import {ParsedUrlQuery} from "querystring";
+import {Collection, Db, MongoClient, ObjectId} from "mongodb";
+import {CreatePostDefaultValue} from "@/Components/Dash/Create";
+import {Box} from "@mui/system";
 
-}
 interface IPost {
-    data : IData
+    title : string,
+    description: string,}
+const BlogPostPage : React.FC<IPost> = ({title, description}) => {
+    const [isLoading, setIsLoading] = useState<boolean>(true)
+    useEffect(() => {
+        const timeout = setInterval(() => {
+        },1000)
+        setTimeout(() => {
+            setIsLoading(false)
+            clearTimeout(timeout)
+        },2000)
+        return () => clearInterval(timeout)
+    },[isLoading])
+    return <BlogPost isLoading={isLoading} title={title} description={description}/>
 }
-const BlogPostPage : React.FC<IPost> = ({data}) => {
 
-    const {description, title} = data;
-    return <BlogPost  title={title} description={description} />
+export async function getStaticPaths(){
+    const client = await MongoClient.connect('mongodb+srv://proftoby97:kpmDnA3Idt99zbRG@eyeserver.tn3mtek.mongodb.net/?retryWrites=true&w=majority');
+    const db : Db = client.db();
+    const blog : Collection<CreatePostDefaultValue> = db.collection('blogs');
+    const posts = await blog.find({}, { projection:  {_id: 1}}).toArray();
+    await client.close()
+    return {
+        fallback: true,
+        paths :  posts.map((post : any)   =>({params: {post: post._id.toString()},}))
+    }
 }
-
-
-export const getServerSideProps : GetServerSideProps = async (context : GetServerSidePropsContext) => {
+export const getStaticProps: GetStaticProps = async (context : GetStaticPropsContext<ParsedUrlQuery, PreviewData>) => {
     const slug : string   | undefined | any = context.params?.post
     const postId = slug?.split('-').shift();
     //perform some async function to fetch data from post
@@ -26,7 +51,8 @@ export const getServerSideProps : GetServerSideProps = async (context : GetServe
     const data = response.data;
     return {
         props: {
-            data
+            title: data?.title,
+            description: data?.description
         }
     }
 }
