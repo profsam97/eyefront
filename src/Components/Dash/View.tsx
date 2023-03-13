@@ -42,19 +42,17 @@ const ViewPage: NextPage = () => {
     }
     const { refetch, isFetching, isError, isLoading, isFetched} = useDataFetch(onSuccess);
     // const posts: viewPostDefaultValue[] = getPosts?.data;
-    useEffect(() =>{
-        console.log('sdsd', error)
-    }, [isDeleteError])
+
     const deletePostHandler = useCallback (async () =>{
         if(isDeleting){
-            const response = await axios.delete(`${baseUrl}/blog/${post_id}`)
-            if (response.statusText !== 'OK') return
-            console.log('something')
-            dispatch(startSnackBar({snackBarOpen: true, severity: 'warning', message: 'Deleted Successfully'}))
-            setTimeout(() => {
-                refetch()
-                dispatch(isDeleted())
-            }, 2000);
+             await axios.delete(`${baseUrl}/blog/${post_id}`)
+            // if (response.statusText !== 'OK') return
+            // console.log('something')
+            // dispatch(startSnackBar({snackBarOpen: true, severity: 'warning', message: 'Deleted Successfully'}))
+            // setTimeout(() => {
+            //     refetch()
+            //     dispatch(isDeleted())
+            // }, 2000);
         }
     },[isDeleting])
     useEffect(() => {
