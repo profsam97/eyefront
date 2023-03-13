@@ -30,11 +30,11 @@ const Empower : React.FC = () => {
         <>
             <Container maxWidth={'xl'}>
                 <Box sx={{display:'flex', flexDirection:'column', p: isMobile ? 2 : 6, m: isMobile ? 2 : 4, gap:8, alignItems: 'center', justifyContent: 'center'}}>
-                    <Typography variant={'h3'} className={'header'} sx={{color: '#000'}}>
+                    <Typography variant={'h3'} className={'header'} >
                         Eyecan, A Companion For Life
                     </Typography>
 
-                    <Typography variant={'body1'}  textAlign={'center'} sx={{color: '#000'}}>
+                    <Typography variant={'body1'}  textAlign={'center'} >
                         Our app allows visually impaired people to describe what they see around them, as well as navigate freely indoors and outdoors. Find things around them and read PDFs, documents, images, and multiple languages.
                     </Typography>
 

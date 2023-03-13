@@ -15,15 +15,15 @@ import { Box } from '@mui/system'
 import { NextPage } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, {useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-// import { useDeletePost, useGetPostsData } from '../../Hooks/useDataFetch'
-// import { utilitiesAction } from '../../Store/utilities'
-// import Loader from '../ui/Loading'
-import {deletePostById, isDeleted, isEditing, modalUserOpen} from "@/store/modal";
+import {deletePostById, isDeleted, isEditing} from "@/store/modal";
 import useDataFetch, {useDeletePost} from "../../hooks/UseDataFetch";
 // @ts-ignore
 import slug from 'slug';
+import baseUrl from "@/Helpers/BaseUrl";
+import axios from "axios";
+import {startSnackBar} from "@/store/Utils";
 
 interface modal {
     modal : {
@@ -35,22 +35,30 @@ const ViewPage: NextPage = () => {
     const dispatch = useDispatch()
     const isDeleting : boolean = useSelector((state: modal) => state.modal.isDeleting);
     const post_id = useSelector((state: modal) => state.modal.post_id);
-    const {mutate: deletePost} = useDeletePost();
+    const {mutate: deletePost, isError : isDeleteError, error} = useDeletePost();
     const [posts, setPosts] = useState<any[]>([])
     const onSuccess = (data : any[]) => {
         setPosts(data)
     }
     const { refetch, isFetching, isError, isLoading, isFetched} = useDataFetch(onSuccess);
     // const posts: viewPostDefaultValue[] = getPosts?.data;
-
-    useEffect(() => {
+    useEffect(() =>{
+        console.log('sdsd', error)
+    }, [isDeleteError])
+    const deletePostHandler = useCallback (async () =>{
         if(isDeleting){
-            deletePost({post_id})
+            const response = await axios.delete(`${baseUrl}/blog/${post_id}`)
+            if (response.statusText !== 'OK') return
+            console.log('something')
+            dispatch(startSnackBar({snackBarOpen: true, severity: 'warning', message: 'Deleted Successfully'}))
             setTimeout(() => {
                 refetch()
                 dispatch(isDeleted())
             }, 2000);
         }
+    },[isDeleting])
+    useEffect(() => {
+        deletePostHandler()
     }, [isDeleting])
     const router = useRouter();
 
@@ -84,15 +92,15 @@ const ViewPage: NextPage = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {posts?.map( ({title, image, id}: {image : string ,  id : number, title : string} , index : undefined | number) => (
+                            {posts?.map( ({title, image, _id}: {image : string ,  _id : number, title : string} , index : undefined | number) => (
                                 <TableRow key={index}
                                           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <TableCell component="th" scope="row">{ title}</TableCell>
-                                    <TableCell ><img  src={image === null ?  'https://source.unsplash.com/random/1280x720?sig=2'  :   image}  width={100} height={70} />    </TableCell>
-                                    <TableCell ><Button variant='contained' color='primary'  onClick={() => dispatch(isEditing({post_id: id,  type: 'edit'}))} >edit</Button></TableCell>
-                                    <TableCell ><Button variant='contained' color='info' onClick={() => router.push('/product/[slug]', `/product/${id}-${slug(title)}` )}  >View</Button></TableCell>
-                                    <TableCell ><Button variant='contained' color='error' onClick={() => dispatch(deletePostById({post_id: id, type: 'delete'}))} >Delete</Button></TableCell>
+                                    <TableCell ><img  src={image === '' ? 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80' : image}  width={100} height={70} />    </TableCell>
+                                    <TableCell ><Button variant='contained' color='primary'  onClick={() => dispatch(isEditing({post_id: _id,  type: 'edit'}))} >edit</Button></TableCell>
+                                    <TableCell ><Button variant='contained' color='info' onClick={() => router.push('/blog/[slug]', `/blog/${_id}-${slug(title)}` )}  >View</Button></TableCell>
+                                    <TableCell ><Button variant='contained' color='error' onClick={() => dispatch(deletePostById({post_id: _id, type: 'delete'}))} >Delete</Button></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

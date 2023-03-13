@@ -28,6 +28,7 @@ const  Mansory : React.FC = () => {
                             src={`${item.img}?w=192&auto=format`}
                             srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
                             alt={item.title}
+                            className={'care'}
                             loading="lazy"
                             style={{
                                 borderBottomLeftRadius: 8,

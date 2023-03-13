@@ -16,6 +16,8 @@ import RedeemIcon from '@mui/icons-material/Redeem';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import {useMediaQuery} from "@mui/material";
 import {useRouter} from "next/router";
+import {useContext} from "react";
+import ContextApi from "@/Content/ContextApi";
 const pages = ['Home', 'About Us'];
 const impacts = ['Financial Impact', 'Community'];
 
@@ -30,8 +32,9 @@ const Header : React.FC = () => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseNavMenu = () => {
+    const handleCloseNavMenu = (home : string) => {
         setAnchorElNav(null);
+        if (home === 'home') return
         router.push('/')
     };
 
@@ -40,6 +43,7 @@ const Header : React.FC = () => {
          if(router.pathname === '/') return  true
         return false
     }
+    const darkMode : boolean = useContext(ContextApi).darkMode;
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
@@ -51,7 +55,7 @@ const Header : React.FC = () => {
         <AppBar position="sticky"  className={'nav'} sx={{backgroundColor: '#000000', minWidth: '100vw'}}>
             <Container maxWidth="lg">
                 <Toolbar disableGutters>
-                    <img src={'/assets/img/logo.png  '} width={ isMobile ?   isSmall ? '50px' : '100px' : '200px'} />
+                    <img  onClick={() => router.push('/')} src={'/assets/img/logo.png  '} width={ isMobile ?   isSmall ? '50px' : '100px' : '200px'} />
                     <Typography
                         variant="h6"
                         noWrap
@@ -94,17 +98,17 @@ const Header : React.FC = () => {
                                 horizontal: 'left',
                             }}
                             open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
+                            onClose={() => handleCloseNavMenu('false')}
                             sx={{
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
                             {pages.map((page, index) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                <MenuItem key={page} onClick={() => handleCloseNavMenu('false')}>
                                     <Typography className={index === 0 ? isHome() ? 'active' : '' : ''} textAlign="center">{page}</Typography>
                                 </MenuItem>
                             ))}
-                            <MenuItem  onClick={handleCloseNavMenu}>
+                            <MenuItem  onClick={() => handleCloseNavMenu('false')}>
                                 <Box sx={{ flexGrow: 0 }}>
                                     Our Impact
                                     <Menu
@@ -131,16 +135,16 @@ const Header : React.FC = () => {
                                     </Menu>
                                 </Box>
                             </MenuItem>
-                            <MenuItem  onClick={handleCloseNavMenu}>
+                            <MenuItem  onClick={() => handleCloseNavMenu('home')}>
                                 <Typography  className={pathName('blog') ? 'active' : ''} textAlign="center" onClick={() => router.push('/blog')} >  Media </Typography>
                             </MenuItem>
-                            <MenuItem  onClick={handleCloseNavMenu}>
+                            <MenuItem  onClick={() => handleCloseNavMenu('false')}>
                                 <Typography textAlign="center">Contact Us</Typography>
                             </MenuItem>
                         </Menu>
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none', mr: 2 }}}>
-                        <Button startIcon={<RedeemIcon/>} className={'gift'} sx={{ backgroundColor: '#EC9535', borderRadius:'30px'}} variant={"contained"} >
+                        <Button startIcon={<RedeemIcon/>} onClick={() => router.push('/dash') }className={'gift'} sx={{ backgroundColor: '#EC9535', borderRadius:'30px'}} variant={"contained"} >
                             Gift A Subscription
                         </Button>
                     </Box>
@@ -150,7 +154,7 @@ const Header : React.FC = () => {
                             <Button
                                 key={page}
                                 className={index === 0 ? isHome() ? 'pageHoverActive' : 'pageHover' : 'pageHover'}
-                                onClick={handleCloseNavMenu}
+                                onClick={() => handleCloseNavMenu('false')}
                                 sx={{ my: 2, color:  'white', display: 'block' }}
                             >
                                 {page}
@@ -159,7 +163,7 @@ const Header : React.FC = () => {
                         <MenuItem  >
                             <Box sx={{ flexGrow: 0 }}  >
 
-                               <Typography variant={'subtitle1'} className={'pageHover'}> Our Impact  <Tooltip title="Open Impact">
+                               <Typography  sx={{color: darkMode ? '#ffffff' : '#ffffff'}}  variant={'subtitle1'}  className={'pageHover'}> Our Impact  <Tooltip title="Open Impact">
                                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                         <ArrowDropDownIcon sx={{color: '#fff'}}/>
                                     </IconButton>
@@ -183,22 +187,22 @@ const Header : React.FC = () => {
                                     onClose={handleCloseUserMenu}
                                 >
                                     {impacts.map((impact) => (
-                                        <MenuItem key={impact} onClick={handleCloseUserMenu}>
+                                        <MenuItem  key={impact} onClick={handleCloseUserMenu}>
                                             <Typography textAlign="center">{impact}</Typography>
                                         </MenuItem>
                                     ))}
                                 </Menu>
                             </Box>
                         </MenuItem>
-                        <MenuItem  onClick={handleCloseNavMenu}       className={'pageHover'}>
+                        <MenuItem sx={{color: darkMode ? '#ffffff' : '#ffffff'}} onClick={() => handleCloseNavMenu('home')}       className={'pageHover'}>
                             <Typography textAlign="center" className={pathName('blog') ? 'active' : ''} onClick={() => router.push('/blog')}> Media </Typography>
                         </MenuItem>
-                        <MenuItem sx={{flexGrow: 0.5}}   onClick={handleCloseNavMenu}       className={'pageHover'}>
+                        <MenuItem  sx={{flexGrow: 0.5,color: darkMode ? '#ffffff' : '#ffffff'}} onClick={() => handleCloseNavMenu('false')}       className={'pageHover'}>
                             <Typography textAlign="center">Contact Us</Typography>
                         </MenuItem>
 
                         <Box sx={{ flexGrow: 0,my:2 }}>
-                            <Button startIcon={<RedeemIcon/>} className={'gift'} sx={{ backgroundColor: '#EC9535', borderRadius:'30px'}} variant={"contained"} >
+                            <Button startIcon={<RedeemIcon/>} onClick={() => router.push('/dash')} className={'gift'} sx={{ backgroundColor: '#EC9535', borderRadius:'30px'}} variant={"contained"} >
                                 Gift A Subscription
                             </Button>
                         </Box>

@@ -13,7 +13,7 @@ const Empower : React.FC = () => {
         <>
             <Container maxWidth={'lg'}>
                 <Box sx={{display:'flex', flexDirection:'column', p: isMobile ? 2 : 6, m: isMobile ? 2 : 7, gap:10, alignItems: 'center', justifyContent: 'center'}}>
-                    <Typography variant={'h3'} className={'header'} sx={{color: '#000'}}>
+                    <Typography variant={'h3'} className={'header'} sx={{}}>
                         We Care for People and They Love Us
                     </Typography>
                 </Box>

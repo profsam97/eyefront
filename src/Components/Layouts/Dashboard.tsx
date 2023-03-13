@@ -26,10 +26,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
             position: 'relative',
             whiteSpace: 'nowrap',
             width: '18vw',
-            minWidth: '15vw',
-            backgroundColor: '#f5f5ee',
-            color: '#110f0f',
-            borderRight: '1px solid #2D40B4',
+            minWidth: '14vw',
+            backgroundColor: '#EC9535',
+            color: '#f8f3f3',
             boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.25)',
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,

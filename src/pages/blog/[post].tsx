@@ -5,26 +5,28 @@ import axios from "axios";
 import baseUrl from "@/Helpers/BaseUrl";
 interface IData {
     title : string,
-    description: string
+    description: string,
+
 }
 interface IPost {
     data : IData
 }
 const BlogPostPage : React.FC<IPost> = ({data}) => {
+
     const {description, title} = data;
     return <BlogPost  title={title} description={description} />
 }
 
 
 export const getServerSideProps : GetServerSideProps = async (context : GetServerSidePropsContext) => {
-    const slug : string   | undefined | any = context.params?.slug
-    const productId = slug?.split('-').shift();
+    const slug : string   | undefined | any = context.params?.post
+    const postId = slug?.split('-').shift();
     //perform some async function to fetch data from post
-    // const response = await axios(`${baseUrl}/${productId}`);
-    // const data = response.data;
+    const response = await axios.get(`${baseUrl}/blog/${postId}`);
+    const data = response.data;
     return {
         props: {
-            data : ''
+            data
         }
     }
 }

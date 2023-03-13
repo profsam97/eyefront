@@ -1,9 +1,10 @@
 import {Box, Container} from "@mui/system";
-import React from "react";
+import React, {useContext} from "react";
 import {Grid, Typography, useMediaQuery} from "@mui/material";
 import Button from "@mui/material/Button";
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import Rows from "@/Components/Utils/Rows";
+import ContextApi from "@/Content/ContextApi";
 
 
 interface IData {
@@ -53,12 +54,12 @@ const data: IData[] = [
 ]
 const Empower : React.FC = () => {
     const isMobile : boolean = useMediaQuery('(max-width: 800px)')
-
+    const darkMode : boolean = useContext(ContextApi).darkMode;
     return (
             <>
             <Container maxWidth={'xl'}>
                     <Box sx={{display:'flex', flexDirection:'column', p: isMobile ? 2 : 6, m: isMobile ? 2 : 7, gap:10, alignItems: 'center', justifyContent: 'center'}}>
-                    <Typography variant={'h3'} className={'header'} sx={{color: '#000'}}>
+                    <Typography variant={'h3'} className={'header'}>
                         On a mission to Empower visually impaired
                     </Typography>
                         <Grid container spacing={ {lg: 5, md:4}} >
@@ -70,7 +71,7 @@ const Empower : React.FC = () => {
                         </Grid>
 
                         <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', margin: 'auto'}}>
-                            <Button sx={{bgcolor: '#000'}}   className={'buttonClass'} centerRipple={true} size={'large'} startIcon={<SportsEsportsIcon/>} variant={'contained'}>
+                            <Button sx={{color: darkMode ? '#ffffff' : '#ffffff', background: darkMode ? '#000000'  : '#000000'}}   className={'buttonClass'} centerRipple={true} size={'large'} startIcon={<SportsEsportsIcon/>} variant={'contained'}>
                                 Download on Playstore
                             </Button>
                         </Box>

@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Markdown from './MarkDown';
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface MainProps {
   posts: string;
@@ -28,9 +29,7 @@ export default function Main(props: MainProps) {
         {title}
       </Typography>
       <Divider />
-        <ReactMarkdown linkTarget="_blank"  className="markdown" key={''}>
-          {posts}
-        </ReactMarkdown>
+        <ReactMarkdown linkTarget="_blank"  children={posts} className="markdown" key={''} remarkPlugins={[remarkGfm]}/>
     </Grid>
   );
 }

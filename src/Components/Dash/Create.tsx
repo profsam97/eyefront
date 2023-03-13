@@ -9,9 +9,11 @@ import  {useRouter} from  'next/router';
 // import { useNewPost } from '../../Hooks/useDataFetch'
 import { useDispatch, useSelector } from 'react-redux'
 // import { utilitiesAction } from '../../Store/utilities'
+
 import * as yup from "yup";
 import TextInput from "@/Components/Utils/TextInput";
 import {useNewPost} from "@/hooks/UseDataFetch";
+import {startSnackBar} from "@/store/Utils";
 export interface CreatePostDefaultValue {
     title: string,
     description: string,
@@ -34,15 +36,15 @@ const CreatePage:NextPage = () => {
     const dispatch = useDispatch();
 
     const onSuccess = () => {
+        dispatch(startSnackBar({message: 'Created Successfully', snackBarOpen: true, severity: 'success'}))
         // dispatch(utilitiesAction.snackStart(snackbar));
-        router.push('/admin')
+        router.push('/dash')
+        reset()
     }
     const {isLoading, mutate: addPostHandler } = useNewPost(onSuccess);
     const onSubmit:SubmitHandler<CreatePostDefaultValue> = (data) => {
-        // const postData = {...getValues()}
-        // addPostHandler(postData)
-        router.push('/dash')
-        reset()
+        const postData = {...getValues()}
+        addPostHandler(postData)
     }
 
     const {handleSubmit, control, getValues, reset, formState: {isSubmitSuccessful}} = useForm<CreatePostDefaultValue>({
@@ -87,8 +89,21 @@ const CreatePage:NextPage = () => {
                     name='description'
                     control={control}
                     render={({field, formState: {errors}}) => (
-                        <TextInput
-                            data={errors?.description} field={field} id='description'
+                        <TextField
+                        required={true}
+                        fullWidth
+                        multiline={true}
+                        rows={3}
+                        variant={'outlined'}
+                        error={!!errors?.description}
+                        helperText={errors?.description?.message}
+                        {...field}
+                        sx={{my:1}}
+                        id={'Description'}
+                        type={'text'}
+                        label={'Description'}
+                        name={'Description'}
+                        autoComplete={'Description'}
                         />
                     )}
                 />

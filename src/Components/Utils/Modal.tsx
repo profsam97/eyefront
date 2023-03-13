@@ -20,6 +20,7 @@ import axios from "axios";
 import TextField from "@mui/material/TextField";
 import {useUpdatePost} from "../../hooks/UseDataFetch";
 import baseUrl from "@/Helpers/BaseUrl";
+import {startSnackBar} from "@/store/Utils";
 
 interface modal {
     modal : {
@@ -60,7 +61,7 @@ export default function MainModal() {
     const [data, setData] = useState()
     const fetchProduct = async () => {
         setLoading(true)
-        const response = await axios.get(`${baseUrl}/${post_id}`)
+        const response = await axios.get(`${baseUrl}/blog/${post_id}`)
         setData(response.data);
         console.log(data)
         setLoading(false)
@@ -84,6 +85,7 @@ export default function MainModal() {
     const handleClose = () => dispatch(modalClose());
 
     const onSuccess = (data: any) => {
+        dispatch(startSnackBar({snackBarOpen: true,message: 'Updated Successfully', severity: 'success'}))
         handleClose()
     }
     const {isLoading: isEditing, mutate: updateProduct} =  useUpdatePost(onSuccess);
@@ -97,7 +99,8 @@ export default function MainModal() {
     },[type])
     const router = useRouter();
     const onSubmit:SubmitHandler<CreatePostDefaultValue> = (data) => {
-        const updatedData = {...getValues()}
+        const {title,description,image} = data;
+        const updatedData = {title, description, image}
         updateProduct(updatedData)
         reset()
     }

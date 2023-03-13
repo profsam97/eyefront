@@ -18,10 +18,10 @@ const Swipes : React.FC<ISwiper> = ({logos}) => {
     const checkSrc  = (src: string) : boolean => src.includes('startups')
     let settings = {
         className: "slideBox",
-        dots: true,
         speed: 500,
         autoplay: true,
         infinite: true,
+        arrow: false,
         autoplaySpeed: 2000,
         cssEase: "linear",
         slidesToShow: isMobile ? 3 : 5,

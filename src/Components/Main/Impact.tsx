@@ -67,7 +67,6 @@ const Impact : React.FC = () => {
                     align="center"
                     color="text.primary"
                     gutterBottom
-                    sx={{color: '#000'}}
                 >
                     Impact
                 </Typography>
