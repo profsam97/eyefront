@@ -9,7 +9,7 @@ import {useContext, useEffect, useState} from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import ContextApi from "@/Content/ContextApi";
 const Hero : React.FC = () => {
-    const images : string[] = ['hero', 'hero1', 'hero2', 'hero3']
+    const images : string[] = ['https://eyecan.in/wp-content/uploads/2022/10/1-SM326114.jpeg', 'https://eyecan.in/wp-content/uploads/2022/10/1-SM326115.jpeg', 'https://eyecan.in/wp-content/uploads/2022/10/2-SM606692-1.jpeg', 'https://eyecan.in/wp-content/uploads/2022/10/1-SM5176961.jpeg']
     const [currentIndex, setCurrentIndex] = useState(0);
     const isMobile : boolean = useMediaQuery('(max-width: 600px)')
     useEffect(() => {
@@ -21,7 +21,7 @@ const Hero : React.FC = () => {
     },[currentIndex])
     const darkMode : boolean = useContext(ContextApi).darkMode;
     return (
-        <Box className={currentIndex === 3 ? 'heroWhite' : 'hero'} sx={{backgroundImage: `url(/assets/img/hero/${images[currentIndex]}.jpeg)`}}>
+        <Box className={currentIndex === 3 ? 'heroWhite' : 'hero'} sx={{backgroundImage: `url(${images[currentIndex]})`}}>
                 <Container maxWidth={'lg'} >
                     <Box sx={{display: 'flex', flexDirection: 'column', color: '#fff', gap:4, maxWidth:600}}>
                     <Typography variant='h2' sx={{marginTop: 20}}>
