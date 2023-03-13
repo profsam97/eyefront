@@ -5,14 +5,16 @@ import Divider from '@mui/material/Divider';
 import Markdown from './MarkDown';
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import {CircularProgress} from "@mui/material";
 
 interface MainProps {
   posts: string;
+  isLoading: boolean;
   title: string;
 }
 
 export default function Main(props: MainProps) {
-  const { posts, title } = props;
+  const { posts, title , isLoading} = props;
 
   return (
     <Grid
@@ -25,6 +27,7 @@ export default function Main(props: MainProps) {
         },
       }}
     >
+      {isLoading && <Typography align={'center'}><CircularProgress/></Typography> }
       <Typography variant="h6" gutterBottom>
         {title}
       </Typography>
