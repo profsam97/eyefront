@@ -1,5 +1,5 @@
 import Blog from "@/Components/Blog/Blog";
-import { GetServerSideProps, NextPage } from "next";
+import {GetServerSideProps, GetStaticProps, NextPage} from "next";
 import axios from "axios";
 import baseUrl from "@/Helpers/BaseUrl";
 import React from "react";
@@ -18,7 +18,7 @@ const BlogPage : React.FC<IData> = ({data}) => {
     return <Blog data={data}/>
 }
 
-export const getServerSideProps : GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps  = async () => {
     const response =  await axios.get(`${baseUrl}/blogs`);
     const data = response.data;
     return {
