@@ -11,14 +11,14 @@ import Button from "@mui/material/Button";
 interface MainFeaturedPostProps {
   post: {
     description: string;
-    id: number
+    _id: number
     image: string;
     title: string;
+    createdAt: Date
   };
 }
 
-export default function MainFeaturedPost(props: MainFeaturedPostProps) {
-  const { post } = props;
+const  MainFeaturedPost : React.FC<MainFeaturedPostProps> = ({post}) => {
   const router = useRouter();
     const handleRedirect = (id : number) => {
         router.push(`/blog/${id}`)
@@ -63,7 +63,7 @@ export default function MainFeaturedPost(props: MainFeaturedPostProps) {
             <Typography variant="h5" color="inherit" paragraph>
               {post.description}
             </Typography>
-            <Button variant="contained" className={'gift'} sx={{cursor: 'pointer', backgroundColor: '#EC9535'}} onClick={() => router.push('/blog/[post]', `/blog/${post.id}-${slug(post.title)}` )}>
+            <Button variant="contained" className={'gift'} sx={{cursor: 'pointer', backgroundColor: '#EC9535'}} onClick={() => router.push('/blog/[post]', `/blog/${post._id}-${slug(post.title)}` )}>
                 Readmore
             </Button>
           </Box>
@@ -72,3 +72,4 @@ export default function MainFeaturedPost(props: MainFeaturedPostProps) {
     </Paper>
   );
 }
+export default MainFeaturedPost;

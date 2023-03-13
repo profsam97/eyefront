@@ -10,44 +10,23 @@ import { Stack } from '@mui/system';
 import { Typography } from '@mui/material';
 import  Nav from  '../Layouts/Header'
 import Footer from "@/Components/Layouts/Footer";
-const mainFeaturedPost = {
-  title: 'Title of a longer featured blog post',
-  id: 1,
-  description:
-    "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
-  image: 'https://source.unsplash.com/random',
-};
+import {useContext} from "react";
+import ContextApi from "@/Content/ContextApi";
+import {createTheme, ThemeProvider} from "@mui/material/styles";
+import Head from "next/head";
+
 
 interface IMain {
+  createdAt: Date,
   title: string,
-  id: number,
+  _id: number,
   image: string,
-  description: string
+  description: string,
 }
 
 interface IData {
   data: IMain[]
 }
-const featuredPosts = [
-  {
-    title: 'Featured post',
-    date: 'Nov 12',
-    id: 1,
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
-    imageLabel: 'Image Text',
-  },
-  {
-    title: 'Post title',
-    date: 'Nov 11',
-    id: 2,
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
-    imageLabel: 'Image Text',
-  },
-];
 
 // const posts = [post1, post2, post3];
 
@@ -55,19 +34,41 @@ const featuredPosts = [
 
 
 const Blog : React.FC<IData> = ({data}) => {
+    const changeFont : boolean = useContext(ContextApi).changeFont;
+    const darkMode : boolean = useContext(ContextApi).darkMode;
+
+    const customTheme = createTheme({
+        palette: {
+            mode: darkMode ? "dark" : "light",
+            contrastThreshold: 5
+        },
+        typography: {
+            fontFamily: changeFont ? "Quicksand" : "Montserrat",
+            fontWeightBold: 700,
+            fontWeightLight: 400,
+            fontWeightRegular: 500,
+            fontWeightMedium: 600,
+        },
+    });
   return (
-    <>
+      <ThemeProvider theme={customTheme}>
       <CssBaseline />
+          <Head>
+              <title>Eye Care </title>
+              <meta name="description" content="Largest EyeCare In india " />
+              <meta name="viewport" content="width=device-width, initial-scale=1" />
+              <link rel="icon" href="/favicon.ico" />
+          </Head>
       <Nav/>
       <Container maxWidth="lg">
         <Header  />
         <main>
-          <MainFeaturedPost post={mainFeaturedPost} />
+          <MainFeaturedPost post={data[0]} />
 
           <Stack spacing={2} sx={{mb:5}} >
                 <Typography variant='h6'>Recent Posts  </Typography>
-            <Grid container >
-              {featuredPosts.map((post) => (
+            <Grid container spacing={{xs: 2, md: 0}} >
+              {data.map((post) => (
                   <Grid item xs={12}sx={{mr:2}} sm={6} md={4} lg={3} key={post.title}>
                     <FeaturedPost  post={post} />
                   </Grid>
@@ -77,7 +78,7 @@ const Blog : React.FC<IData> = ({data}) => {
         </main>
       </Container>
     <Footer/>
-    </>
+      </ThemeProvider>
   );
 }
 export default Blog;

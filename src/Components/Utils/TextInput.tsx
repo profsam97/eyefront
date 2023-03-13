@@ -9,15 +9,19 @@ interface Input {
     field: []
     data: data,
     type: string,
-    required: boolean
+    required: boolean,
+    multiline: boolean,
+    row: number
 }
-const TextInput : React.JSXElementConstructor<any> = ({id, field, data, type, required}: Input) => {
+const TextInput : React.JSXElementConstructor<any> = ({id, field, data, type, required, multiline, row}: Input) => {
 
     return (
         <>
             <TextField
                 required={!required}
                 fullWidth
+                multiline={!multiline}
+                rows={row}
                 variant={'outlined'}
                 error={!!data}
                 helperText={data?.message}

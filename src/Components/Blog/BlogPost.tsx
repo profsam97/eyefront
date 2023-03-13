@@ -6,9 +6,13 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import { Grid } from "@mui/material";
 import Sidebar from "./Sidebar";
 import Main from "./Main";
-import React from "react";
+import React, {useContext} from "react";
 import Nav from '../Layouts/Header'
 import Footer from "@/Components/Layouts/Footer";
+import ContextApi from "@/Content/ContextApi";
+import {createTheme, ThemeProvider} from "@mui/material/styles";
+import Head from "next/head";
+import Paper from "@mui/material/Paper";
 interface IPost {
     title: string,
     description: string
@@ -37,22 +41,47 @@ const sidebar = {
     ],
   };
 const BlogPost : React.FC<IPost> = ({title, description}) => {
+    const changeFont: boolean = useContext(ContextApi).changeFont;
+    const darkMode: boolean = useContext(ContextApi).darkMode;
 
-    return <>
-        <Nav/>
-             <Container maxWidth={'lg'}>
-                <Header/>
-                <Grid container spacing={5} sx={{ mt: 3 }}>
-            <Main  title="title" posts={'sds ds ds d sjds djs dsd sjd s  d sd j  sd s  djs d'} />
-            <Sidebar
-              title={sidebar.title}
-              description={sidebar.description}
-              archives={sidebar.archives}
-              social={sidebar.social}
-            />
-          </Grid>
-            </Container>
-        <Footer/>
-    </>
+    const customTheme = createTheme({
+        palette: {
+            mode: darkMode ? "dark" : "light",
+            contrastThreshold: 5
+        },
+        typography: {
+            fontFamily: changeFont ? "Quicksand" : "Montserrat",
+            fontWeightBold: 700,
+            fontWeightLight: 400,
+            fontWeightRegular: 500,
+            fontWeightMedium: 600,
+        },
+    });
+    return (
+        <ThemeProvider theme={customTheme}>
+            <Paper elevation={0}>
+                <Head>
+                    <title>{title}</title>
+                    <meta name="description" content={`Blog about ${title}`}/>
+                    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                    <link rel="icon" href="/favicon.ico"/>
+                </Head>
+                <Nav/>
+                <Container maxWidth={'lg'}>
+                    <Header/>
+                    <Grid container spacing={5} sx={{mt: 3}}>
+                        <Main title={title} posts={description}/>
+                        <Sidebar
+                            title={sidebar.title}
+                            description={sidebar.description}
+                            archives={sidebar.archives}
+                            social={sidebar.social}
+                        />
+                    </Grid>
+                </Container>
+                <Footer/>
+            </Paper>
+        </ThemeProvider>
+    )
 }
 export default BlogPost;

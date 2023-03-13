@@ -5,8 +5,9 @@ import Stack from '@mui/system/Stack';
 import Button from '@mui/material/Button';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
-import { useEffect, useState } from 'react';
+import {useContext, useEffect, useState} from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import ContextApi from "@/Content/ContextApi";
 const Hero : React.FC = () => {
     const images : string[] = ['hero', 'hero1', 'hero2', 'hero3']
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -18,23 +19,24 @@ const Hero : React.FC = () => {
 
             return () => clearInterval(timeoutInterval)
     },[currentIndex])
+    const darkMode : boolean = useContext(ContextApi).darkMode;
     return (
-        <Box className='hero' sx={{backgroundImage: `url(/assets/img/hero/${images[currentIndex]}.jpeg)`}}>
+        <Box className={currentIndex === 3 ? 'heroWhite' : 'hero'} sx={{backgroundImage: `url(/assets/img/hero/${images[currentIndex]}.jpeg)`}}>
                 <Container maxWidth={'lg'} >
                     <Box sx={{display: 'flex', flexDirection: 'column', color: '#fff', gap:4, maxWidth:600}}>
                     <Typography variant='h2' sx={{marginTop: 20}}>
                     On A Mission To Go Beyond Sight
                     </Typography>
-                    <Typography variant='h6' sx={{fontWeight: 300}}>
-                    Eyecan – An App that makes it easier for visually challenged people to go with their everyday tasks.
+                    <Typography variant='h6' className={'grey'} sx={{fontWeight: 400}}>
+                   <b> Eyecan </b>– An App that makes it easier for visually challenged people to go with their everyday tasks.
                     </Typography>
 
                     <Stack direction={isMobile ? 'column' : 'row'} spacing={2}>
-                    <Button sx={{bgcolor: '#000', borderRadius: '2%'}} fullWidth={true}  className={'buttonClass'} centerRipple={true} size={'large'} startIcon={<SportsEsportsIcon/>} variant={'contained'}>
+                    <Button color={"primary"} sx={{ color: darkMode ? '#ffffff' : '#ffffff', background: darkMode ? '#000000'  : '#000000', borderRadius: '2%'}} fullWidth={true}  className={'buttonClass'} centerRipple={true} size={'large'} startIcon={<SportsEsportsIcon/>} variant={'contained'}>
                                 Download on Playstore
                             </Button>
 
-                            <Button  className={'outlinedButtonClass'} fullWidth={true}  sx={{color:"#fff" }} centerRipple={true} size={'large'} startIcon={<PlayCircleFilledWhiteIcon/>} variant={'outlined'}>
+                            <Button  className={'outlinedButtonClass'} fullWidth={true}  sx={{color: currentIndex === 3 ? "#000" : "#fff" }} centerRipple={true} size={'large'} startIcon={<PlayCircleFilledWhiteIcon fontSize={'large'} />} variant={'outlined'}>
                                 See What users say
                             </Button>
                     </Stack>
