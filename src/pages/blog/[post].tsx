@@ -7,27 +7,58 @@ import {
     NextPage,
     PreviewData
 } from "next";
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 import baseUrl from "@/Helpers/BaseUrl";
 import {ParsedUrlQuery} from "querystring";
 import {Collection, Db, MongoClient, ObjectId} from "mongodb";
 import {CreatePostDefaultValue} from "@/Components/Dash/Create";
 import {Box} from "@mui/system";
+import {useRouter} from "next/router";
 
 interface IPost {
     title : string,
     description: string,}
-const BlogPostPage : React.FC<IPost> = ({title, description}) => {
+const BlogPostPage : React.FC<IPost> = () => {
+    const router = useRouter()
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    useEffect(() => {
-        const timeout = setInterval(() => {
+    const [title, setTitle] = useState<string>('')
+    const [description, setDescription] = useState<string>('')
+    // const beginChange = useCallback(async () => {
+    //      const post : any  = router.query.post
+    //     const post_id = post?.split('-').shift();
+    //      console.log(post_id)
+    //     if (!post_id) return
+    //     const response = await axios.get(`${baseUrl}/blog/${post_id}`);
+    //     const data = response.data;
+    //     setTitle(data.title)
+    //     setDescription(data.description)
+    //     setIsLoading(false)
+    // },[isLoading])
+
+    useEffect( () => {
+        if (title) return
+        const beginChange = async () => {
+            const post : any  = router.query.post
+            const post_id = post?.split('-').shift();
+            console.log(post_id)
+            if (!post_id) return
+            const response = await axios.get(`${baseUrl}/blog/${post_id}`);
+            const data = response.data;
+            setTitle(data.title)
+            setDescription(data.description)
+            setIsLoading(false)
+        }
+    const timeout =  setInterval(() => {
+            setIsLoading(prevState => !prevState)
+        beginChange()
         },1000)
         setTimeout(() => {
-            setIsLoading(false)
-            clearTimeout(timeout)
+            clearInterval(timeout)
         },4000)
-        return () => clearInterval(timeout)
+
+
+        return () => clearTimeout(timeout)
     },[isLoading])
     return <BlogPost isLoading={isLoading} title={title} description={description}/>
 }
@@ -43,18 +74,19 @@ const BlogPostPage : React.FC<IPost> = ({title, description}) => {
 //         paths :  posts.map((post : any)   =>({params: {post: post._id.toString()},}))
 //     }
 // }
-export const getServerSideProps: GetServerSideProps = async (context ) => {
-    const slug : string   | undefined | any = context.params?.post
-    const postId = slug?.split('-').shift();
-    //perform some async function to fetch data from post
-    const response = await axios.get(`${baseUrl}/blog/${postId}`);
-    const data = response.data;
-    return {
-        props: {
-            title: data?.title,
-            description: data?.description
-        }
-    }
-}
+// export const getStaticProps: GetStaticProps = async (context : GetStaticPropsContext<ParsedUrlQuery, PreviewData>) => {
+//     const slug : string   | undefined | any = context.params?.post
+//     const postId = slug?.split('-').shift();
+//     //perform some async function to fetch data from post
+//     const response = await axios.get(`${baseUrl}/blog/${postId}`);
+//     const data = response.data;
+//     console.log(data)
+//     return {
+//         props: {
+//             title: data?.title,
+//             description: data?.description
+//         }
+//     }
+// }
 
 export default BlogPostPage;
