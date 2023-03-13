@@ -26,7 +26,7 @@ const BlogPostPage : React.FC<IPost> = ({title, description}) => {
         setTimeout(() => {
             setIsLoading(false)
             clearTimeout(timeout)
-        },2000)
+        },4000)
         return () => clearInterval(timeout)
     },[isLoading])
     return <BlogPost isLoading={isLoading} title={title} description={description}/>
