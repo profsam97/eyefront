@@ -24,8 +24,11 @@ const Swipes : React.FC<ISwiper> = ({logos}) => {
         arrow: false,
         autoplaySpeed: 2000,
         cssEase: "linear",
-        slidesToShow: isMobile ? 3 : 5,
-        adaptiveHeight: true,
+        height: 300,
+        maxHeight: 300,
+        minHeight: 300,
+        slidesToShow: isMobile ? 2 : 5,
+        // adaptiveHeight: true,
         slidesToScroll: 1
     };
         return (

@@ -20,7 +20,7 @@ const Empower : React.FC = () => {
 
     return (
         <>
-            <Container maxWidth={'lg'} sx={{mb:8}}>
+            <Container maxWidth={'lg'} >
                 <Box sx={{display:'flex', flexDirection:'column', p: isMobile ? 2 : 3, m: isMobile ? 2 : 4, gap:2, alignItems: 'center', justifyContent: 'center'}}>
                     <Typography variant={'h3'} className={'header'} >
                        Our Partners
