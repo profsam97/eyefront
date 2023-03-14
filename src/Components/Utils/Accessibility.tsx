@@ -47,12 +47,6 @@ const Accessibility  : React.FC = () => {
                                 </ListItemIcon>
                                 <ListItemText >Change Font</ListItemText>
                             </MenuItem>
-                            <MenuItem>
-                                <ListItemIcon>
-                                    <ContentPaste fontSize="small" />
-                                </ListItemIcon>
-                                <ListItemText>Make GreyScale</ListItemText>
-                            </MenuItem>
                             <Divider />
                             <MenuItem onClick={onReset}>
                                 <ListItemIcon>
