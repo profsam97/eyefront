@@ -36,7 +36,7 @@ const Hero : React.FC = () => {
                                 Download on Playstore
                             </Button>
 
-                            <Button  className={'outlinedButtonClass'} fullWidth={true}  sx={{color: currentIndex === 3 ? "#000" : "#fff" }} centerRipple={true} size={'large'} startIcon={<PlayCircleFilledWhiteIcon fontSize={'large'} />} variant={'outlined'}>
+                            <Button  className={'outlinedButtonClass'} fullWidth={true}  sx={{color: currentIndex === 2 ? "#000" : "#fff" }} centerRipple={true} size={'large'} startIcon={<PlayCircleFilledWhiteIcon fontSize={'large'} />} variant={'outlined'}>
                                 See What users say
                             </Button>
                     </Stack>
