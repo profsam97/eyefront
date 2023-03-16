@@ -5,7 +5,15 @@ import {ListItemIcon, MenuList, Typography} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
-import {Cloud, ContentCopy, ContentCut, ContentPaste, DarkModeOutlined} from "@mui/icons-material";
+import {
+    Cloud,
+    ContentCopy,
+    ContentCut,
+    ContentPaste,
+    DarkModeOutlined,
+    FormatBold, FormatColorTextOutlined,
+    LightModeOutlined
+} from "@mui/icons-material";
 import Divider from "@mui/material/Divider";
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import FontDownloadIcon from '@mui/icons-material/FontDownload';
@@ -14,12 +22,14 @@ import ContextApi from "@/Content/ContextApi";
 const Accessibility  : React.FC = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
-    const handleChangeFont = useContext(ContextApi).handleChangeFont;
-    const handleDarkMode = useContext(ContextApi).handleDarkMode;
-    const handleReset = useContext(ContextApi).handleReset;
+    const {handleChangeFont, darkMode, handleDarkMode,handleReset, handleMakeDark,handleMakeLight  }= useContext(ContextApi);
+
     const onChangeFont = () => handleChangeFont();
     const onDarkMode = () => handleDarkMode();
     const onReset = () => handleReset();
+    const onBold = () => handleMakeDark();
+
+    const onLight = () => handleMakeLight();
     const handleToggle = () => {
         setIsOpen(prevState => !prevState)
     }
@@ -37,15 +47,29 @@ const Accessibility  : React.FC = () => {
                         <MenuList>
                             <MenuItem onClick={onDarkMode}>
                                 <ListItemIcon>
-                                    <DarkModeOutlined fontSize="small" />
+
+                                    {darkMode ? <LightModeOutlined fontSize={'small'}/>  : <DarkModeOutlined fontSize="small" /> }
                                 </ListItemIcon>
-                                <ListItemText  >Dark Mode</ListItemText>
+                                <ListItemText  >{darkMode ? 'Light Mode' : 'Dark Mode'} </ListItemText>
                             </MenuItem>
                             <MenuItem onClick={onChangeFont}>
                                 <ListItemIcon>
                                     <FontDownloadIcon  fontSize="small" />
                                 </ListItemIcon>
                                 <ListItemText >Change Font</ListItemText>
+                            </MenuItem>
+                            <Divider />
+                            <MenuItem onClick={onLight}>
+                                <ListItemIcon>
+                                    <FormatColorTextOutlined  fontSize="small" />
+                                </ListItemIcon>
+                                <ListItemText >Make Light</ListItemText>
+                            </MenuItem>
+                            <MenuItem onClick={onBold}>
+                                <ListItemIcon>
+                                    <FormatBold  fontSize="small" />
+                                </ListItemIcon>
+                                <ListItemText >Make Bold</ListItemText>
                             </MenuItem>
                             <Divider />
                             <MenuItem onClick={onReset}>

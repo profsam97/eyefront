@@ -81,7 +81,7 @@ const CreatePage:NextPage = () => {
                     control={control}
                     render={({field, formState: {errors}}) => (
                         <TextInput
-                            data={errors?.image} field={field} id='image'  required={true}
+                            data={errors?.image} field={field} id='Paste an Image Link'  required={true}
                         />
                     )}
                 />
