@@ -22,8 +22,7 @@ import MainModal from "@/Components/Utils/Modal";
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-    const changeFont : boolean = useContext(ContextApi).changeFont;
-    const darkMode : boolean = useContext(ContextApi).darkMode;
+    const {changeFont,  darkMode, darkNumber, lightNumber}  = useContext(ContextApi);
 
     const customTheme = createTheme({
         palette: {
@@ -34,8 +33,8 @@ export default function Home() {
             fontFamily: changeFont ? "Open Sans" : "Montserrat",
             fontWeightBold: 700,
             fontWeightLight: 400,
-            fontWeightRegular: 500,
-            fontWeightMedium: 600,
+            fontWeightRegular: lightNumber,
+            fontWeightMedium: darkNumber,
         },
     });
   return (
