@@ -63,12 +63,14 @@ const Blog : React.FC<IData> = ({data}) => {
       <Container maxWidth="lg">
         <Header  />
         <main>
-          <MainFeaturedPost post={data[0]} />
+
+          {data.length > 0 && <MainFeaturedPost post={data[0]} />}
 
           <Stack spacing={2} sx={{mb:5}} >
                 <Typography variant='h6'>Recent Posts  </Typography>
+              {data.length === 0 && <Typography variant='h6'>No Posts  </Typography>}
             <Grid container spacing={{xs: 2, md: 0}} >
-              {data.map((post) => (
+              {data.length > 0 && data.map((post) => (
                   <Grid item xs={12}sx={{mr:2}} sm={6} md={4} lg={3} key={post.title}>
                     <FeaturedPost  post={post} />
                   </Grid>
