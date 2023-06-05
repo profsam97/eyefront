@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import { Inter } from 'next/font/google'
 import Footer from "@/Components/Layouts/Footer";
 import Header from "@/Components/Layouts/Header";
 import Empower from "@/Components/Main/Empower";
@@ -18,8 +17,8 @@ import NextNProgress from "nextjs-progressbar";
 import Snackbar from "@/Components/Utils/Snackbar";
 import Accessibility from "@/Components/Utils/Accessibility";
 import MainModal from "@/Components/Utils/Modal";
+import CodeByte from "@/Components/Utils/CodeByte";
 
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
     const {changeFont,  darkMode, darkNumber, lightNumber}  = useContext(ContextApi);
@@ -56,6 +55,7 @@ export default function Home() {
         <Footer/>
     </Paper>
           <Accessibility/>
+          <CodeByte/>
       </ThemeProvider>
   )
 }

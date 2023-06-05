@@ -1,4 +1,5 @@
 import React from "react";
+import {IForm} from "@/Content/ContextProvider";
 interface IContext {
     darkMode : boolean,
     changeFont: boolean,
@@ -8,6 +9,8 @@ interface IContext {
     handleChangeFont: () => void,
     handleReset: () => void,
     handleMakeLight: () => void,
+    handleUpdateForm: (data : IForm) => void,
+    formState: IForm[]
     handleMakeDark :  () => void
 }
 const ContextApi = React.createContext<IContext>({
@@ -19,6 +22,8 @@ const ContextApi = React.createContext<IContext>({
     handleDarkMode: () => {},
     handleReset: ()  => {},
     handleMakeDark: () => {},
+    handleUpdateForm: () => {},
+    formState: [],
     handleMakeLight: () => {}
 })
 

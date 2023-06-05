@@ -5,12 +5,24 @@ import ContextApi from "@/Content/ContextApi";
 interface IContext {
     children: React.ReactNode
 }
+export interface IForm {
+    firstName: string,
+   lastName: string,
+
+}
 const ContextProvider : React.FC<IContext> = ({children}) => {
     const [darkMode, setDarkMode] = useState<boolean>(false);
     const [changeFont, setChangeFont] = useState<boolean>(false);
     const [lightNumber, setLightNumber] = useState<number>(500);
     const [darkNumber, setDarkNumber] = useState<number>(600)
 
+    const [formState, setFormState] = useState<IForm[]>([])
+    const handleUpdateForm = (data : IForm) => {
+        const newData = [...formState, data];
+
+        const sortedData = newData.sort((a, b) => a.firstName.localeCompare(b.firstName))
+        setFormState(sortedData)
+    }
     const handleDarkMode = () => {
         setDarkMode(prevState => !prevState)
     }
@@ -45,6 +57,8 @@ const ContextProvider : React.FC<IContext> = ({children}) => {
         darkNumber,
         lightNumber,
         handleMakeLight,
+        handleUpdateForm,
+        formState,
         handleMakeDark
     }
     return (
