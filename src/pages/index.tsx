@@ -17,7 +17,6 @@ import NextNProgress from "nextjs-progressbar";
 import Snackbar from "@/Components/Utils/Snackbar";
 import Accessibility from "@/Components/Utils/Accessibility";
 import MainModal from "@/Components/Utils/Modal";
-import CodeByte from "@/Components/Utils/CodeByte";
 
 
 export default function Home() {
@@ -55,7 +54,6 @@ export default function Home() {
         <Footer/>
     </Paper>
           <Accessibility/>
-          <CodeByte/>
       </ThemeProvider>
   )
 }
