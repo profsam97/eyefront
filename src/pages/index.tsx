@@ -13,10 +13,7 @@ import Hero from '@/Components/Main/Hero';
 import Paper from '@mui/material/Paper';
 import ContextApi from "@/Content/ContextApi";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
-import NextNProgress from "nextjs-progressbar";
-import Snackbar from "@/Components/Utils/Snackbar";
 import Accessibility from "@/Components/Utils/Accessibility";
-import MainModal from "@/Components/Utils/Modal";
 
 
 export default function Home() {
