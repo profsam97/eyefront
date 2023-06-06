@@ -4,7 +4,7 @@
 
     COPY package*.json ./
 
-    RUN npm install
+    RUN npm install --timeout 30000
 
     COPY . ./
 
