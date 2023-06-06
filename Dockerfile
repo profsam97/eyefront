@@ -2,10 +2,10 @@
 
     WORKDIR /app
 
-    RUN npm config set timeout 300000 && npm install
 
     COPY package*.json ./
 
+    RUN export HTTP_TIMEOUT=300000 && npm install
 
     COPY . ./
 
