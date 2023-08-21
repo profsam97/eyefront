@@ -3,11 +3,10 @@
     WORKDIR /app
 
 
-    COPY package*.json ./
+    COPY . .
+    
+    RUN  npm install
 
-    RUN export HTTP_TIMEOUT=300000 && npm install
-
-    COPY . ./
 
     RUN npm run build 
 
