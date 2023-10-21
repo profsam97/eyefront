@@ -20,6 +20,7 @@ const BlogPage : React.FC<IData> = ({data}) => {
 
 export const getStaticProps: GetStaticProps  = async () => {
     const response =  await axios.get(`${baseUrl}/blogs`);
+    console.log(baseUrl)
     const data = response.data;
     return {
         props: {
