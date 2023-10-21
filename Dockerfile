@@ -1,14 +1,13 @@
-FROM node:alpine
 
-WORKDIR /app
+FROM node:14 as buildimage
+WORKDIR /usr/src/app
+COPY ./ /client
+RUN cd client && npm install
+RUN cd client && npm run build
 
-COPY . .
+FROM node:14 
+WORKDIR /usr/src/app
+COPY  --from=buildimage /usr/src/app/client .
+EXPOSE 3000
+CMD [ "npm", "start" ]
 
-RUN  npm install
-
-
-    RUN npm run build
-
-    EXPOSE 3000
-
-    CMD ["npm", "start"]
