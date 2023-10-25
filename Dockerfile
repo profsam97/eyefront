@@ -1,8 +1,9 @@
 
 FROM node:14 as buildimage
 WORKDIR /usr/src/app
-COPY ./ ./client
-RUN cd client && npm cache clean --force && npm install
+COPY package.json ./client
+RUN  cd client && npm install
+COPY . ./client
 RUN cd client && npm run build
 
 FROM node:14 
