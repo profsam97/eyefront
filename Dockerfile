@@ -2,6 +2,7 @@
 FROM node:14 as buildimage
 WORKDIR /usr/src/app
 COPY package.json ./client
+RUN ls
 WORKDIR /usr/src/app/client
 RUN npm install
 WORKDIR /usr/src/app
