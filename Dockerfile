@@ -2,7 +2,9 @@
 FROM node:14 as buildimage
 WORKDIR /usr/src/app
 COPY package.json ./client
-RUN  cd client && npm install
+WORKDIR /usr/src/app/client
+RUN npm install
+WORKDIR /usr/src/app
 COPY . ./client
 RUN cd client && npm run build
 
