@@ -1,4 +1,4 @@
-export const production : string = 'http://web-server.svc.cluster.local:5000';
+export const production : string = 'http://web-server.default.svc.cluster.local:5000';
 
 const develop : string = 'http://192.168.33.10:5000';
 
