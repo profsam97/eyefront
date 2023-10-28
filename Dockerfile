@@ -7,7 +7,7 @@ WORKDIR /usr/src/app/client
 RUN yarn install
 WORKDIR /usr/src/app
 COPY . ./client
-RUN cd client && npm run build
+RUN cd client && yarn build
 
 FROM node:14 
 WORKDIR /usr/src/app
