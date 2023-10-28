@@ -2,8 +2,8 @@
 FROM node:14 as buildimage
 WORKDIR /usr/src/app
 COPY . ./client
-RUN cd client && yarn install
-RUN cd client && yarn build
+RUN cd client && npm install
+RUN cd client && npm run build
 
 FROM node:14 
 WORKDIR /usr/src/app
