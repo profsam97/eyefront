@@ -3,14 +3,13 @@ import {useMutation, useQuery} from "react-query";
 import {useSelector} from "react-redux";
 import modal from "@/store/modal";
 import post from "@/pages/blog/[post]";
-import {production} from "@/Helpers/BaseUrl";
+import baseUrl from "@/Helpers/BaseUrl";
 
 interface ICreate {
     title: string,
     description: string,
     image: string
 }
-const baseUrl : string = production
 export function useNewPost (onSuccess: any) {
     const newPostHandler = async(data: ICreate) => {
         const response = await axios.post(`${baseUrl}/blog`, data)

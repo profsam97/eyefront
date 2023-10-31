@@ -1,8 +1,8 @@
-export const production : string = 'http://web-server.default.svc.cluster.local:5000';
+export const develop : string = 'http://web-server.default.svc.cluster.local:5000';
 
-const develop : string = 'http://192.168.33.10:5000';
+const production : string = 'http://eye.vprofile.cloudradar.online';
 
-const baseurl : string = process.env.NEXT_PUBLIC_SERVER || develop;
+const baseurl : string = production;
 
 
 export default baseurl;
